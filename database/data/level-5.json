@@ -1,0 +1,13 @@
+{
+    "level": 5,
+    "items": [
+        { "id": 1, "level": 5, "indonesia": "sarapan", "english": "breakfast", "image": "breakfast.svg", "audio": "breakfast" },
+        { "id": 2, "level": 5, "indonesia": "perpustakaan", "english": "library", "image": "library.svg", "audio": "library" },
+        { "id": 3, "level": 5, "indonesia": "pasar", "english": "market", "image": "market.svg", "audio": "market" },
+        { "id": 4, "level": 5, "indonesia": "berenang", "english": "swimming", "image": "swimming.svg", "audio": "swimming" },
+        { "id": 5, "level": 5, "indonesia": "membaca", "english": "reading", "image": "reading.svg", "audio": "reading" },
+        { "id": 6, "level": 5, "indonesia": "bermain", "english": "playing", "image": "playing.svg", "audio": "playing" },
+        { "id": 7, "level": 5, "indonesia": "berbelanja", "english": "shopping", "image": "shopping.svg", "audio": "shopping" },
+        { "id": 8, "level": 5, "indonesia": "bangun tidur", "english": "wake up", "image": "wake-up.svg", "audio": "wake up" }
+    ]
+}

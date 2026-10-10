@@ -1,0 +1,13 @@
+{
+    "level": 6,
+    "items": [
+        { "id": 1, "level": 6, "indonesia": "rumah sakit", "english": "hospital", "image": "hospital.svg", "audio": "hospital" },
+        { "id": 2, "level": 6, "indonesia": "bandara", "english": "airport", "image": "airport.svg", "audio": "airport" },
+        { "id": 3, "level": 6, "indonesia": "taman", "english": "garden", "image": "garden.svg", "audio": "garden" },
+        { "id": 4, "level": 6, "indonesia": "sepeda", "english": "bicycle", "image": "bicycle.svg", "audio": "bicycle" },
+        { "id": 5, "level": 6, "indonesia": "menyanyi", "english": "singing", "image": "singing.svg", "audio": "singing" },
+        { "id": 6, "level": 6, "indonesia": "melukis", "english": "painting", "image": "painting.svg", "audio": "painting" },
+        { "id": 7, "level": 6, "indonesia": "cerah", "english": "sunny", "image": "sunny.svg", "audio": "sunny" },
+        { "id": 8, "level": 6, "indonesia": "hari ulang tahun", "english": "birthday", "image": "birthday.svg", "audio": "birthday" }
+    ]
+}

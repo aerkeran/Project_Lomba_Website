@@ -3,7 +3,140 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/*
+ * Speak! design tokens (DESIGN.md §6-§10, §38).
+ * Tailwind v4 resolves these through `@theme`, so token names become
+ * utilities (`bg-primary`, `rounded-card`, `shadow-soft`, …).
+ */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* Typography — DESIGN.md §7 */
+    --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Nunito', 'Nunito Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Primary — DESIGN.md §6.1 */
+    --color-primary: #4f7df3;
+    --color-primary-hover: #3f6fe5;
+    --color-primary-soft: #eaf0ff;
+
+    /* Secondary — DESIGN.md §6.2 */
+    --color-secondary: #ffb84d;
+    --color-secondary-soft: #fff4df;
+
+    /* Success / accent — DESIGN.md §6.3 */
+    --color-success: #5bcb8a;
+    --color-success-soft: #e9f9f0;
+
+    /* Error — DESIGN.md §6.4 */
+    --color-error: #f16b6b;
+    --color-error-soft: #fff0f0;
+
+    /* Neutral — DESIGN.md §6.5 */
+    --color-ink: #263238;
+    --color-ink-secondary: #607080;
+    --color-ink-muted: #8a98a8;
+    --color-canvas: #f8fafd;
+    --color-surface: #ffffff;
+    --color-line: #e3e8ef;
+
+    /* Radius — DESIGN.md §9 */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-card: 20px;
+    --radius-hero: 24px;
+    --radius-pill: 999px;
+
+    /* Spacing — DESIGN.md §8 (Tailwind's default scale is already a 4px system) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-section: 80px;
+
+    /* Shadows — DESIGN.md §10 */
+    --shadow-soft: 0 4px 16px rgb(38 50 56 / 8%);
+    --shadow-card: 0 8px 24px rgb(38 50 56 / 10%);
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-canvas font-sans text-ink antialiased;
+    }
+
+    /* DESIGN.md §30 — honour the OS "reduce motion" preference. */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    /*
+     * Button system — DESIGN.md §21. One place for the shared shape so
+     * <x-button> and <x-audio-button> cannot drift apart. Minimum height is 44px
+     * to honour the touch-target rule (DESIGN.md §29).
+     */
+    .btn {
+        @apply inline-flex select-none items-center justify-center gap-2 rounded-2xl font-bold;
+        @apply transition duration-200 ease-out active:scale-[0.98];
+        @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40;
+        @apply disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .btn--sm {
+        @apply min-h-11 px-5 text-sm;
+    }
+
+    .btn--md {
+        @apply min-h-12 px-6 text-base;
+    }
+
+    .btn--lg {
+        @apply min-h-14 px-8 text-lg;
+    }
+
+    .btn--primary {
+        @apply bg-primary text-white shadow-soft hover:bg-primary-hover;
+    }
+
+    .btn--secondary {
+        @apply bg-primary-soft text-primary hover:bg-primary/15;
+    }
+
+    .btn--ghost {
+        @apply bg-transparent text-ink-secondary hover:bg-ink/5 hover:text-ink;
+    }
+
+    /* Speaking state for the audio button (DESIGN.md §17).
+       The JS only has to toggle a data-state attribute. */
+    [data-audio-button][data-state='speaking'] .sf-audio-button__icon {
+        animation: sf-pulse 900ms ease-in-out infinite;
+    }
+}
+
+@keyframes sf-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
 }

@@ -1,0 +1,13 @@
+{
+    "level": 3,
+    "items": [
+        { "id": 1, "level": 3, "indonesia": "sekolah", "english": "school", "image": "school.svg", "audio": "school" },
+        { "id": 2, "level": 3, "indonesia": "guru", "english": "teacher", "image": "teacher.svg", "audio": "teacher" },
+        { "id": 3, "level": 3, "indonesia": "teman", "english": "friend", "image": "friend.svg", "audio": "friend" },
+        { "id": 4, "level": 3, "indonesia": "keluarga", "english": "family", "image": "family.svg", "audio": "family" },
+        { "id": 5, "level": 3, "indonesia": "ibu", "english": "mother", "image": "mother.svg", "audio": "mother" },
+        { "id": 6, "level": 3, "indonesia": "ayah", "english": "father", "image": "father.svg", "audio": "father" },
+        { "id": 7, "level": 3, "indonesia": "saudara laki-laki", "english": "brother", "image": "brother.svg", "audio": "brother" },
+        { "id": 8, "level": 3, "indonesia": "saudara perempuan", "english": "sister", "image": "sister.svg", "audio": "sister" }
+    ]
+}

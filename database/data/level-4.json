@@ -1,0 +1,13 @@
+{
+    "level": 4,
+    "items": [
+        { "id": 1, "level": 4, "indonesia": "kelinci", "english": "rabbit", "image": "rabbit.svg", "audio": "rabbit" },
+        { "id": 2, "level": 4, "indonesia": "gajah", "english": "elephant", "image": "elephant.svg", "audio": "elephant" },
+        { "id": 3, "level": 4, "indonesia": "pisang", "english": "banana", "image": "banana.svg", "audio": "banana" },
+        { "id": 4, "level": 4, "indonesia": "nasi", "english": "rice", "image": "rice.svg", "audio": "rice" },
+        { "id": 5, "level": 4, "indonesia": "baju", "english": "shirt", "image": "shirt.svg", "audio": "shirt" },
+        { "id": 6, "level": 4, "indonesia": "sepatu", "english": "shoe", "image": "shoe.svg", "audio": "shoe" },
+        { "id": 7, "level": 4, "indonesia": "mata", "english": "eye", "image": "eye.svg", "audio": "eye" },
+        { "id": 8, "level": 4, "indonesia": "tangan", "english": "hand", "image": "hand.svg", "audio": "hand" }
+    ]
+}

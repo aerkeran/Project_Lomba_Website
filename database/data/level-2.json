@@ -1,0 +1,13 @@
+{
+    "level": 2,
+    "items": [
+        { "id": 1, "level": 2, "indonesia": "burung", "english": "bird", "image": "bird.svg", "audio": "bird" },
+        { "id": 2, "level": 2, "indonesia": "ikan", "english": "fish", "image": "fish.svg", "audio": "fish" },
+        { "id": 3, "level": 2, "indonesia": "susu", "english": "milk", "image": "milk.svg", "audio": "milk" },
+        { "id": 4, "level": 2, "indonesia": "air", "english": "water", "image": "water.svg", "audio": "water" },
+        { "id": 5, "level": 2, "indonesia": "rumah", "english": "house", "image": "house.svg", "audio": "house" },
+        { "id": 6, "level": 2, "indonesia": "mobil", "english": "car", "image": "car.svg", "audio": "car" },
+        { "id": 7, "level": 2, "indonesia": "pohon", "english": "tree", "image": "tree.svg", "audio": "tree" },
+        { "id": 8, "level": 2, "indonesia": "bunga", "english": "flower", "image": "flower.svg", "audio": "flower" }
+    ]
+}
