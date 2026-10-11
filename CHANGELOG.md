@@ -11,9 +11,47 @@ proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ### Planned
 
-- **Fase 2 — Navigasi:** Menu Screen, Settings (volume), Level Selection, Learning Menu, tombol Back.
 - **Fase 3 — Fitur inti:** Materi, Latihan, Kuis (ketik jawaban + feedback).
 - **Fase 4 — Polish & QA:** responsive, aksesibilitas, micro-interaction, checklist PRD §12.
+
+---
+
+## [0.2.0] - 2026-10-11
+
+Fase 2 (navigasi) dari rundown pengerjaan `PRD.md` §6 — halaman-halaman yang dapat diklik penuh.
+
+### Added
+
+#### Fase 2 — Navigasi
+
+- **Menu Screen** (`GET /`) → `resources/views/menu.blade.php`: logo SpeakFun!, tagline, tombol **Play**, tombol **Settings**, dan slider volume (PRD §6.1).
+- **Settings** (`GET /settings`) → `resources/views/settings.blade.php`: slider volume saja, tanpa pengaturan lain (PRD §6.2).
+- **Level Selection** (`GET /levels`) → `resources/views/levels.blade.php`: satu tombol per kelas, satu kolom di mobile dan grid di desktop (PRD §6.3 dan §10).
+- **Learning Menu** (`GET /levels/{level}`) → `resources/views/learning-menu.blade.php`: Materi, Latihan, Kuis / Tes (PRD §6.4).
+- **Halaman tiap aktivitas** (`GET /levels/{level}/{activity}`) → `resources/views/activity.blade.php`. Isi sekarang masih *empty state* `DESIGN.md` §26; materi sesungguhnya dibuat pada Fase 3. Route sudah ada sejak Fase 2 supaya FR-01 (masuk ke Materi/Latihan/Kuis) lengkap dan dapat diuji sejak hari pertama.
+- **`LevelController`** dengan `index`, `show`, dan `activity`. Level divalidasi lewat `VocabularyRepository`, sehingga kelas yang belum ada datanya menghasilkan `404` alih-alih halaman kosong.
+- **Route dijaga ketat**: `{level}` dibatasi `whereNumber` dan `{activity}` dibatasi `whereIn(['materi', 'latihan', 'kuis'])`.
+- **Komponen `<x-volume-slider>`** — satu markup untuk slider di Menu Screen dan di Settings, di-*sync* oleh `volume.js`.
+- **`NavigationTest`** — 6 test baru yang memeriksa isi halaman, seluruh link (dibandingkan lewat path agar tidak bergantung host), tombol Back, dan kasus 404.
+
+### Changed
+
+- `routes/web.php` — `/` tidak lagi menampilkan `welcome.blade.php`; ditambah route `settings`, `levels`, `levels.show`, `activity.show`.
+- `resources/views/layouts/app.blade.php` — wrapper diberi `min-h-screen` supaya halaman yang isinya pendek terpusat secara vertikal.
+- `resources/views/levels.blade.php` — subjudul Indonesia dihapus agar label UI tetap satu bahasa mengikuti contoh PRD §6.3.
+
+### Testing
+
+- **29 test / 255 assertion lulus** (`php artisan test --compact`).
+- `vendor/bin/pint --dirty --format agent` bersih.
+- `npm run build` sukses; utilitas yang dipakai (`accent-primary`, `h-11`, `rounded-hero`, `sm:grid-cols-2`, dsb.) dipastikan ikut ter-compile.
+- Smoke test manual 9 URL: `/`, `/settings`, `/levels`, `/levels/1`, `/levels/6`, `/levels/1/materi` → `200`; `/levels/99`, `/levels/abc`, `/levels/1/tantangan` → `404`.
+
+### Notes
+
+- **Tidak ada navbar.** Navigasi mengikuti model PRD §6: satu rantai Menu → Level → Learning Menu, dengan tombol Back di setiap halaman (FR-01). Tidak ada halaman Progress karena PRD melarang leaderboard/peringkat.
+- **Tombol Back selalu di kiri atas** di semua halaman, meskipun contoh PRD §6.2 menempatkan Back di bawah pada Settings — dipilih demi konsistensi (`DESIGN.md` §5).
+- `resources/views/welcome.blade.php` sudah tidak dipakai dan boleh dihapus.
 
 ---
 
@@ -81,5 +119,6 @@ Dua bug yang ditemukan oleh test suite saat Fase 1 dijalankan:
 - **`VOICERSS_KEY` belum diisi.** Tanpa key, audio otomatis memakai Web Speech API browser (tetap berfungsi, hanya karakter suaranya berbeda).
 - **`public/build` tidak di-commit** — jalankan `npm run build` setelah clone.
 
-[Unreleased]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/aerkeran/Project_Lomba_Website/releases/tag/v0.1.0
