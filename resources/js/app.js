@@ -6,11 +6,13 @@
  */
 
 import { registerAudioButtons } from './features/audio-button.js';
+import { initLesson } from './features/lesson.js';
 import { getVolume, initVolumeSliders, setVolume } from './features/volume.js';
 
 function boot() {
     registerAudioButtons();
     initVolumeSliders();
+    initLesson();
 }
 
 if (document.readyState === 'loading') {

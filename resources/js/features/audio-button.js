@@ -75,6 +75,26 @@ function handleClick(event) {
         });
 }
 
+/**
+ * Silence this button and return it to Idle — used when a lesson moves on to
+ * the next word while the previous one is still talking.
+ *
+ * Bumping the generation matters: without it the playback promise that is
+ * being torn down would still be "current", and its rejection would paint a
+ * scary error for a word the child has already left behind.
+ *
+ * @param {Element | null | undefined} button
+ */
+export function cancelAudioButton(button) {
+    if (!button) {
+        return;
+    }
+
+    generations.set(button, (generations.get(button) ?? 0) + 1);
+    stop();
+    setState(button, 'idle');
+}
+
 function applyStateIfCurrent(button, generation, state) {
     if (isCurrent(button, generation)) {
         setState(button, state);

@@ -48,8 +48,9 @@ class LevelController extends Controller
     }
 
     /**
-     * Destination of one activity button. The lesson itself arrives in Fase 3;
-     * the route exists now so navigation is complete and clickable from day one.
+     * One of the three activities of a level (PRD §6.5–§6.7). The whole level
+     * is handed to the view so the child can move between words without
+     * waiting for a page to reload between every one.
      */
     public function activity(int $level, string $activity): View
     {
@@ -57,11 +58,16 @@ class LevelController extends Controller
 
         abort_unless(isset(self::ACTIVITIES[$activity]), 404);
 
-        return view('activity', [
+        $items = $this->vocabulary->forLevel($level);
+
+        return view('activities.'.$activity, [
             'level' => $level,
             'activity' => $activity,
-            'title' => self::ACTIVITIES[$activity]['label'],
+            'label' => self::ACTIVITIES[$activity]['label'],
             'icon' => self::ACTIVITIES[$activity]['icon'],
+            'items' => $items,
+            'total' => $items->count(),
+            'menuUrl' => route('levels.show', $level),
         ]);
     }
 

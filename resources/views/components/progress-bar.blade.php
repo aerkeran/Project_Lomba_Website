@@ -15,7 +15,7 @@
     @if ($label)
         <div class="mb-2 flex items-baseline justify-between gap-4 text-sm font-bold text-ink-secondary">
             <span>{{ $label }}</span>
-            <span>{{ $value }} / {{ $max }}</span>
+            <span data-progress-count>{{ $value }} / {{ $max }}</span>
         </div>
     @endif
 
@@ -28,6 +28,7 @@
         class="h-3 w-full overflow-hidden rounded-pill bg-line"
     >
         <div
+            data-progress-fill
             class="h-full rounded-pill bg-primary transition-[width] duration-300 ease-out"
             style="width: {{ $percent }}%"
         ></div>

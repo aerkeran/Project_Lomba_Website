@@ -11,8 +11,50 @@ proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ### Planned
 
-- **Fase 3 — Fitur inti:** Materi, Latihan, Kuis (ketik jawaban + feedback).
 - **Fase 4 — Polish & QA:** responsive, aksesibilitas, micro-interaction, checklist PRD §12.
+
+---
+
+## [0.3.0] - 2026-10-11
+
+Fase 3 (fitur inti) dari rundown pengerjaan `PRD.md` §6.5–§6.7 — Materi, Latihan, dan Kuis.
+
+### Added
+
+#### Fase 3 — Materi, Latihan, Kuis
+
+- **Materi** (`GET /levels/{level}/materi`) → `resources/views/activities/materi.blade.php`: gambar, kosakata Inggris, caption Bahasa Indonesia, tombol **Play**, **Previous/Next** (PRD §6.5 dan FR-04).
+- **Latihan** (`GET /levels/{level}/latihan`) → `resources/views/activities/latihan.blade.php`: `Say this word:` + gambar + kata + tombol **Listen** besar + badge `Now it's your turn!` (PRD §6.6 dan FR-05). Sengaja tanpa mikrofon karena workshop tidak memakai voice recognition.
+- **Kuis** (`GET /levels/{level}/kuis`) → `resources/views/activities/kuis.blade.php`: gambar + tombol **Listen** + kolom ketik + tombol **Check** + feedback `Great Job!` / `Try Again!` (PRD §6.7, FR-06, FR-07).
+- **Komponen `<x-lesson-shell>`** → bingkai bersama ketiga aktivitas: tombol Back, header Level·aktivitas, `<x-progress-bar>`, kartu, dan navigasi Previous/Next. Seluruh kata level dikirim sebagai `<ol>` tersembunyi sehingga tidak ada *reload* di antara kata.
+- **`resources/js/features/lesson.js`** — logika berjalan di browser: ganti gambar/kata/caption, perbarui progress bar & `aria-valuenow`, navigasi Previous/Next, tombol **Finish 🎉** di kata terakhir yang kembali ke Learning Menu, serta pemeriksaan jawaban Kuis.
+- **`cancelAudioButton()`** di `audio-button.js` — mematikan pengucapan dan mereset state ke Idle ketika siswa berpindah kata, sekaligus meng-*bump* generation supaya promise playback yang dibatalkan tidak menggambar pesan error untuk kata yang sudah ditinggalkan.
+- **Titik-ikat pada `<x-progress-bar>`** (`data-progress-count`, `data-progress-fill`) agar JS dapat memperbarui tanpa merender ulang.
+- **`ActivityPagesTest`** — 6 test baru: isi tiap aktivitas, ketiadaan kolom ketik pada Latihan, feedback ganda pada Kuis, label progress per aktivitas, seluruh level mengirim seluruh kata, dan keberadaan file gambar yang dijanjikan data JSON.
+
+### Changed
+
+- `app/Http/Controllers/LevelController.php` — `activity()` tidak lagi mengembalikan *empty state* placeholder, melainkan memuat `activities.{materi,latihan,kuis}` lengkap dengan `items`, `total`, `menuUrl`, `label`, dan `icon`.
+- `resources/js/app.js` — `boot()` ikut memanggil `initLesson()`.
+- `tests/Feature/NavigationTest.php` — ekspektasi `No lessons yet.` diganti penanda konten nyata tiap aktivitas.
+
+### Removed
+
+- `resources/views/activity.blade.php` — view *empty state* Fase 2 sudah digantikan tiga halaman nyata.
+
+### Notes
+
+- **Pemeriksaan jawaban Kuis dilakukan di browser.** PRD §13 tidak memuat akun, skor, maupun peringkat, jadi tidak ada yang bisa dicurangi; imbal hasilnya jawaban muncul seketika (`DESIGN.md` §36 Prinsip 2) tanpa menunggu round-trip ke server. Jawaban memang terbaca di `data-english` halaman.
+- **Kuis butuh JavaScript.** Materi dan Latihan tetap menampilkan kata pertama tanpa JS, tetapi Kuis baru bisa berjalan penuh dengan JS — seluruh pipeline audio pun sudah bergantung JS sejak Fase 1.
+- **Prev pada Materi/Latihan adalah penambahan** di luar ASCII PRD §6.5 (hanya `NEXT →`), demi `DESIGN.md` §41 yang menaruh usability di urutan prioritas pertama.
+- Kata Inggris dibandingkan setelah *lowercase*, spasi ganda dirapatkan, dan tanda baca di ujung dibuang (FR-07).
+
+### Testing
+
+- **35 test / 368 assertion lulus** (`php artisan test --compact`).
+- `vendor/bin/pint --dirty --format agent` bersih.
+- `npm run build` sukses; `lesson.js` ikut ter-bundle (JS naik 4.37 kB → 7.06 kB).
+- Smoke test manual: `/levels/1/materi`, `/levels/1/latihan`, `/levels/1/kuis`, `/levels/4/materi` → `200`; `/levels/1/tantangan` → `404`.
 
 ---
 
@@ -119,6 +161,7 @@ Dua bug yang ditemukan oleh test suite saat Fase 1 dijalankan:
 - **`VOICERSS_KEY` belum diisi.** Tanpa key, audio otomatis memakai Web Speech API browser (tetap berfungsi, hanya karakter suaranya berbeda).
 - **`public/build` tidak di-commit** — jalankan `npm run build` setelah clone.
 
-[Unreleased]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/aerkeran/Project_Lomba_Website/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/aerkeran/Project_Lomba_Website/releases/tag/v0.1.0

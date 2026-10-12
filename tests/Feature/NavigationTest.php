@@ -59,10 +59,16 @@ class NavigationTest extends TestCase
 
     public function test_every_activity_is_reachable_and_points_back_to_its_level(): void
     {
-        foreach (['materi', 'latihan', 'kuis'] as $activity) {
+        $signatures = [
+            'materi' => 'data-lesson-word',
+            'latihan' => 'Say this word:',
+            'kuis' => 'data-lesson-input',
+        ];
+
+        foreach ($signatures as $activity => $marker) {
             $html = $this->get("/levels/1/{$activity}")->assertOk()->getContent();
 
-            $this->assertStringContainsString('No lessons yet.', $html);
+            $this->assertStringContainsString($marker, $html, "The {$activity} page is missing its lesson.");
             $this->assertContains('/levels/1', $this->linkPaths($html), "Back button missing on {$activity}.");
         }
     }
