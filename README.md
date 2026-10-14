@@ -1,58 +1,234 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SpeakFun!
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Listen, Speak, Learn!**
 
-## About Laravel
+Website pembelajaran Bahasa Inggris untuk siswa Sekolah Dasar (kelas 1–6).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1. Pengertian & Tujuan Website
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**SpeakFun!** adalah website pembelajaran Bahasa Inggris yang berfokus pada tiga kemampuan dasar: **mendengar (listen), mengucapkan (speak), dan memahami kosakata (learn)**. Fitur utamanya adalah **Text-To-Speech (TTS)**: siswa melihat gambar suatu benda, mengetik namanya, lalu website menampilkan dan membacakan padanan Bahasa Inggrisnya.
 
-## Learning Laravel
+Contoh alur (PRD §1):
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Gambar | Siswa mengetik | SpeakFun! memberikan |
+|---|---|---|
+| 🍎 apel | `apel` | **Apple** + dibacakan melalui TTS |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Tujuan website (PRD §3):**
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. Membantu siswa mengenal kosakata Bahasa Inggris.
+2. Membantu siswa mendengar pengucapan kata Bahasa Inggris yang benar.
+3. Memberikan kesempatan menirukan pengucapan.
+4. Menguji ingatan kosakata melalui kuis.
+5. Membuat belajar terasa sederhana dan menyenangkan.
 
-## Agentic Development
+Website ini **bukan** platform belajar Bahasa Inggris yang lengkap, melainkan media latihan **kosakata dan pengucapan dasar**. Sesuai PRD §13, tanpa login, leaderboard, ranking, chat, atau pengaturan selain volume.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
-```bash
-composer require laravel/boost --dev
+## 2. Tech Stack
 
-php artisan boost:install
+| Lapisan | Teknologi | Keterangan |
+|---|---|---|
+| Bahasa | **PHP 8.3** | Sesuai `composer.json` (`"php": "^8.3"`) |
+| Framework | **Laravel 13** | `laravel/framework ^13.17` |
+| Templat Blade | **Blade** | `resources/views/*.blade.php` |
+| Build tool | **Vite 8** | `laravel-vite-plugin ^3.1`, script `dev` / `build` |
+| CSS | **Tailwind CSS v4** | `@tailwindcss/vite`, design token via `@theme` |
+| JavaScript | **Vanilla ES Modules** | Tanpa framework SPA; `resources/js/features/*` |
+| Text-To-Speech | **VoiceRSS** + **Web Speech API** | Audio utama dari server (`/tts`), fallback ke browser bila gagal |
+| Konten | **JSON statis** | `database/data/level-1.json` … `level-6.json`, dibaca `VocabularyRepository` — tanpa tabel database |
+| Testing | **PHPUnit 12** | `php artisan test` |
+| Code style | **Laravel Pint** | `vendor/bin/pint` |
+| Dev tools | Laravel Boost, Laravel Pail, Tinker | |
+
+**Alur TTS:**
+
+```text
+Tombol 🔊 → resources/js/features/tts.js
+              ├─ GET /tts?text=apple  →  TtsController → TtsService → VoiceRSS → MP3
+              └─ bila gagal / key kosong → Web Speech API browser (suara tetap keluar)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+API key VoiceRSS (`VOICERSS_KEY`) hanya disimpan di server, tidak pernah sampai ke browser.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 3. Font
 
-## Code of Conduct
+| Font | Bobot | Penggunaan | Token CSS |
+|---|---|---|---|
+| **Nunito Sans** | 400, 500, 600, 700 | Teks UI / body (paragraf, label tombol, instruksi) | `--font-sans` |
+| **Nunito** | 700, 800 | Heading / display ("SpeakFun!", "Choose Your Level!", judul halaman) | `--font-display` |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Keduanya dipilih karena bentuknya *rounded* dan mudah dibaca oleh anak (PRD §9 Typography).
 
-## Security Vulnerabilities
+- Didefinisikan di `vite.config.js` melalui `laravel-vite-plugin/fonts` (sumber: **Bunny Fonts**), lalu di-*self-host* saat `npm run build`.
+- Token dipakai di `resources/css/app.css` (`@theme { --font-sans; --font-display; }`) dan dipanggil lewat class Tailwind `font-sans` / `font-display`.
+- Layout memanggil font lewat directive `@fonts` di `resources/views/layouts/app.blade.php`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 4. Rute & Peta Tombol
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4.1 Daftar rute (`routes/web.php`)
+
+| Method | URL | Nama rute | Handler | Halaman |
+|---|---|---|---|---|
+| GET | `/` | `home` | view `menu` | Menu Screen |
+| GET | `/settings` | `settings` | view `settings` | Settings (volume) |
+| GET | `/levels` | `levels` | `LevelController@index` | Pemilihan Level |
+| GET | `/levels/{level}` | `levels.show` | `LevelController@show` | Learning Menu |
+| GET | `/levels/{level}/{activity}` | `activity.show` | `LevelController@activity` | Materi / Latihan / Kuis |
+| GET | `/tts` | `tts` | `TtsController` (invokable) | Audio MP3 (throttle 60 req/menit) |
+
+`{level}` wajib angka, `{activity}` hanya boleh `materi`, `latihan`, atau `kuis` — selain itu 404.
+
+### 4.2 Ke mana setiap tombol mengarah
+
+**Menu Screen (`/`)**
+
+| Tombol | Arah |
+|---|---|
+| ▶ **Play** | → `/levels` (pemilihan level) |
+| ⚙ **Settings** | → `/settings` |
+| Slider volume | Tidak pindah halaman — mengatur volume audio (tersimpan di browser) |
+
+**Settings (`/settings`)**
+
+| Tombol | Arah |
+|---|---|
+| ← **Back** | → `/` |
+| Slider volume | Tidak pindah halaman |
+
+**Pemilihan Level (`/levels`)**
+
+| Tombol | Arah |
+|---|---|
+| ← **Back** | → `/` |
+| **Level 1 … Level 6** | → `/levels/{level}` (contoh: `Level 3` → `/levels/3`) |
+
+**Learning Menu (`/levels/{level}`)**
+
+| Tombol | Arah |
+|---|---|
+| ← **Back** | → `/levels` |
+| 📚 **Materi** | → `/levels/{level}/materi` |
+| 🗣️ **Latihan** | → `/levels/{level}/latihan` |
+| 📝 **Kuis / Tes** | → `/levels/{level}/kuis` |
+
+**Halaman Materi / Latihan / Kuis (`/levels/{level}/{activity}`)**
+
+| Tombol | Arah / perilaku |
+|---|---|
+| ← **Back** | → `/levels/{level}` (kembali ke Learning Menu) |
+| 🔊 **Listen** | Tidak pindah halaman — memutar pengucapan (server `/tts?text=…`, fallback Web Speech API). Bisa ditekan berulang tanpa batas (FR-03) |
+| **← Previous** | Tidak pindah halaman — pindah ke kata sebelumnya (JavaScript `lesson.js`) |
+| **Next →** | Tidak pindah halaman — pindah ke kata berikutnya; **pada kata terakhir** → kembali ke `/levels/{level}`. Pada Kuis, tombol Next hanya muncul setelah jawaban benar |
+| **Check** (Kuis saja) | Tidak pindah halaman — mengecek jawaban di browser, lalu menampilkan *Great Job!* / *Try Again!* |
+| *Skip to content* | → `#main-content` (tautan aksesibilitas di setiap halaman) |
+
+---
+
+## 5. Struktur Proyek
+
+```text
+Project_Lomba_Website/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── LevelController.php      # Level picker, Learning Menu, Materi/Latihan/Kuis
+│   │       ├── TtsController.php        # GET /tts → MP3 pengucapan
+│   │       └── Controller.php
+│   ├── Library/
+│   │   └── voicerss_tts.php             # (legacy) helper VoiceRSS, tidak terpakai
+│   ├── Models/
+│   │   └── User.php                     # bawaan Laravel, tidak dipakai fitur workshop
+│   ├── Providers/
+│   │   └── AppServiceProvider.php
+│   └── Services/
+│       ├── TtsService.php               # Panggil VoiceRSS + cache MP3 per kata
+│       └── VocabularyRepository.php     # Baca kosakata dari JSON per level
+│
+├── config/
+│   ├── tts.php                          # VOICERSS_KEY, endpoint, bahasa, lokasi cache
+│   ├── filesystems.php                  # Disk local / public / speeches / s3
+│   └── ...
+│
+├── database/
+│   ├── data/
+│   │   ├── level-1.json … level-6.json  # Sumber data kosakata (PRD §7)
+│   ├── factories/, migrations/, seeders/
+│
+├── public/
+│   └── images/vocab/                    # Gambar kosakata per kata
+│
+├── resources/
+│   ├── css/app.css                      # Design token Tailwind v4 (@theme), tombol, animasi
+│   ├── js/
+│   │   ├── app.js                       # Entry point
+│   │   └── features/
+│   │       ├── audio-button.js          # State tombol 🔊 (idle/loading/speaking/done/error)
+│   │       ├── lesson.js                # Navigasi antar kata + cek jawaban kuis
+│   │       ├── tts.js                   # Panggil /tts, fallback Web Speech API
+│   │       └── volume.js                # Penyimpanan & perubahan volume
+│   └── views/
+│       ├── layouts/app.blade.php        # Kerangka halaman, @fonts, @vite, region status TTS
+│       ├── menu.blade.php               # Menu Screen (PRD §6.1)
+│       ├── settings.blade.php           # Settings (PRD §6.2)
+│       ├── levels.blade.php             # Level Selection (PRD §6.3)
+│       ├── learning-menu.blade.php      # Learning Menu (PRD §6.4)
+│       ├── activities/
+│       │   ├── materi.blade.php         # PRD §6.5
+│       │   ├── latihan.blade.php        # PRD §6.6
+│       │   └── kuis.blade.php           # PRD §6.7
+│       └── components/                  # Button, AudioButton, BackButton, Card,
+│                                        # Feedback, LessonShell, ProgressBar, VolumeSlider
+│
+├── routes/
+│   ├── web.php                          # Seluruh rute halaman + /tts
+│   └── console.php
+│
+├── tests/
+│   ├── Feature/                         # NavigationTest, ActivityPagesTest,
+│   │                                    # TtsRouteTest, VocabularyRepositoryTest, …
+│   └── Unit/
+│
+├── vite.config.js                       # Input build + deklarasi font Nunito / Nunito Sans
+├── composer.json                        # Skrip setup / dev / test
+├── package.json                         # build, dev
+├── PRD.md                               # Product Requirement Document
+├── DESIGN.md                            # Acuan desain visual & komponen
+└── CHANGELOG.md                         # Riwayat perubahan
+```
+
+**Alur navigasi utama (PRD §6):**
+
+```text
+Menu (/) ──▶ Levels (/levels) ──▶ Learning Menu (/levels/{level})
+   │                                                 │
+   └──▶ Settings (/settings)                        ├──▶ Materi   (/levels/{level}/materi)
+                                                     ├──▶ Latihan  (/levels/{level}/latihan)
+                                                     └──▶ Kuis     (/levels/{level}/kuis)
+```
+
+---
+
+## 6. Menjalankan Proyek
+
+```bash
+composer run setup     # composer install, .env + APP_KEY, migrate, npm install, npm run build
+composer run dev       # server + Vite dev secara bersamaan
+composer run test      # menjalankan seluruh test PHPUnit
+```
+
+Atau manual:
+
+```bash
+composer install
+cp .env.example .env && php artisan key:generate
+npm install && npm run build
+php artisan serve
+```
