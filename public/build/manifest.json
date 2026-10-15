@@ -1,0 +1,69 @@
+{
+  "_fonts--KeH0HWr.css": {
+    "file": "assets/fonts--KeH0HWr.css",
+    "src": "_fonts--KeH0HWr.css"
+  },
+  "_nunito-700-normal-Dort48En.woff2": {
+    "file": "assets/nunito-700-normal-Dort48En.woff2",
+    "src": "_nunito-700-normal-Dort48En.woff2"
+  },
+  "_nunito-700-normal-OcDqTBcA.woff": {
+    "file": "assets/nunito-700-normal-OcDqTBcA.woff",
+    "src": "_nunito-700-normal-OcDqTBcA.woff"
+  },
+  "_nunito-800-normal-D-J0wlBY.woff": {
+    "file": "assets/nunito-800-normal-D-J0wlBY.woff",
+    "src": "_nunito-800-normal-D-J0wlBY.woff"
+  },
+  "_nunito-800-normal-Dz8SOQK_.woff2": {
+    "file": "assets/nunito-800-normal-Dz8SOQK_.woff2",
+    "src": "_nunito-800-normal-Dz8SOQK_.woff2"
+  },
+  "_nunito-sans-400-normal-AkRraKH2.woff2": {
+    "file": "assets/nunito-sans-400-normal-AkRraKH2.woff2",
+    "src": "_nunito-sans-400-normal-AkRraKH2.woff2"
+  },
+  "_nunito-sans-400-normal-DY9yCUyQ.woff": {
+    "file": "assets/nunito-sans-400-normal-DY9yCUyQ.woff",
+    "src": "_nunito-sans-400-normal-DY9yCUyQ.woff"
+  },
+  "_nunito-sans-500-normal-BkymD7ni.woff": {
+    "file": "assets/nunito-sans-500-normal-BkymD7ni.woff",
+    "src": "_nunito-sans-500-normal-BkymD7ni.woff"
+  },
+  "_nunito-sans-500-normal-DlmaWqTx.woff2": {
+    "file": "assets/nunito-sans-500-normal-DlmaWqTx.woff2",
+    "src": "_nunito-sans-500-normal-DlmaWqTx.woff2"
+  },
+  "_nunito-sans-600-normal-BtVRvDNj.woff2": {
+    "file": "assets/nunito-sans-600-normal-BtVRvDNj.woff2",
+    "src": "_nunito-sans-600-normal-BtVRvDNj.woff2"
+  },
+  "_nunito-sans-600-normal-DLks-Kj1.woff": {
+    "file": "assets/nunito-sans-600-normal-DLks-Kj1.woff",
+    "src": "_nunito-sans-600-normal-DLks-Kj1.woff"
+  },
+  "_nunito-sans-700-normal-CICRJDmU.woff2": {
+    "file": "assets/nunito-sans-700-normal-CICRJDmU.woff2",
+    "src": "_nunito-sans-700-normal-CICRJDmU.woff2"
+  },
+  "_nunito-sans-700-normal-CLVG92B9.woff": {
+    "file": "assets/nunito-sans-700-normal-CLVG92B9.woff",
+    "src": "_nunito-sans-700-normal-CLVG92B9.woff"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-blYJyX7H.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-ivcU3b9W.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

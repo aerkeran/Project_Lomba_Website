@@ -19,7 +19,6 @@
         "APP_NAME": "SpeakFun",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://your-project.vercel.app",
 
         "APP_KEY": "base64:lOD8/1I5towVG9zAZG4A5rSe2ni3wfd7jkRPd1d6LvE=",
 
