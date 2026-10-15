@@ -1,0 +1,37 @@
+{
+    "version": 2,
+    "framework": null,
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.9.0"
+        }
+    },
+    "routes": [
+        { "src": "/build/(.*)", "dest": "/build/$1" },
+        { "src": "/images/(.*)", "dest": "/images/$1" },
+        { "src": "/(favicon\\.ico|robots\\.txt)", "dest": "/$1" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ],
+    "env": {
+        "APP_NAME": "SpeakFun",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://your-project.vercel.app",
+
+        "APP_KEY": "base64:lOD8/1I5towVG9zAZG4A5rSe2ni3wfd7jkRPd1d6LvE=",
+
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp",
+
+        "CACHE_STORE": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "array"
+    }
+}
